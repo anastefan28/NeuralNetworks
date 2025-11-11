@@ -1,13 +1,13 @@
 import pathlib
 
 def extract_coefficient(idx: int, parts: list[str]) -> float:
-    sign=1.0
+    sign=1
     if idx>0 and parts[idx-1]=='-':
-        sign=-1.0
+        sign=-1
     term=parts[idx]
     number=term[:-1]
     if number=='':
-        coef=1.0
+        coef=1
     else:
         coef=float(number)
     return sign*coef

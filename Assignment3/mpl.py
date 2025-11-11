@@ -78,10 +78,10 @@ def forward(X, weights):
 def backward(Y_true, weights, activations, lr):
     batch_size=activations.X.shape[0]
     delta2=(activations.y_pred-Y_true)
-    dW2=np.dot(activations.a1.T, delta2)/batch_size
+    dW2=np.matmul(activations.a1.T, delta2)/batch_size
     db2=np.sum(delta2, axis=0, keepdims=True)/batch_size
-    delta1=np.dot(delta2, weights.W2.T)*(activations.z1 > 0)
-    dW1=np.dot(activations.X.T, delta1)/batch_size
+    delta1=np.matmul(delta2, weights.W2.T)*(activations.z1 > 0)
+    dW1=np.matmul(activations.X.T, delta1)/batch_size
     db1=np.sum(delta1, axis=0, keepdims=True)/batch_size
     weights.W2-=lr*dW2
     weights.b2-=lr*db2
@@ -138,6 +138,6 @@ def save_predictions(predictions):
     df = pd.DataFrame({"ID": np.arange(len(predictions)), "target": predictions})
     df.to_csv("submission.csv", index=False)
 
-weights = train(X_train, Y_train, lr=0.5, epochs=75, batch_size=64)
+weights = train(X_train, Y_train, lr=0.5, epochs=40, batch_size=64)
 preds = predict(X_test, weights)
 save_predictions(preds)
